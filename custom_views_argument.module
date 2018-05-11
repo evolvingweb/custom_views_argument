@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_views_argument.module.
+ */
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * You can also use this hook to configure your argument in such a way that
+ * one would not need to define a relationship between "content" and
+ * "taxonomy term" in the view. However, it requires more code and defeats
+ * the purpose of having an easy solution.
+ */
+function custom_views_argument_views_data_alter(&$data) {
+  // Works only if "field_slug" is defined on taxonomy terms.
+  if (isset($data['taxonomy_term__field_slug'])) {
+    $field_slug = $data['taxonomy_term__field_slug']['field_slug'];
+
+    // Create a new views argument for reading slug arguments and interpreting
+    // them as taxonomy terms.
+    $data['taxonomy_term__field_slug']['field_slug_entity_id'] = [
+      'group' => $field_slug['group'],
+      'title' => t('Custom: Has taxonomy term with slug'),
+      'title short' => t('Slug'),
+      'help' => $field_slug['help'],
+      // We override the argument. This is where we do our tricks!
+      'argument' => [
+        'table' => 'taxonomy_term__field_slug',
+        'field' => 'entity_id',
+        'id' => 'custom_taxonomy_slug',
+        'zero is null' => TRUE,
+      ],
+    ];
+  }
+}
