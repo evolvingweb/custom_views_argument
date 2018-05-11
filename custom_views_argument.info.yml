@@ -1,0 +1,10 @@
+# Package info
+name: "Custom: Views Argument"
+description: "An example of how to create custom views arguments."
+type: module
+core: 8.x
+package: Custom
+
+# Dependencies
+dependencies:
+  - views
