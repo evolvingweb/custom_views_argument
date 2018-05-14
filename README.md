@@ -67,6 +67,8 @@ things as per your requirements. All the above configuration comes out of the
 box when you install the _Standard_ profile of Drupal. You will only need to
 configure the _Slug_ manually.
 
+![](screenshots/step%2001%20-%20configure%20field%20slug%20on%20taxonomy%20term.png)
+
 ### Step 2: Create a custom module
 
 To place the custom code we create a module. Example: `custom_views_argument`.
@@ -129,6 +131,7 @@ put everything together.
 * Create a _page_ display and set it's URL to `/blog/%`
 * Add a relationship to _taxonomy terms referenced from field_tags_.
   * We do this to be able to use the _Slug_ field in a filter.
+  ![](screenshots/step%2002%20-%20configure%20relationship%20with%20taxonomy%20term.png)
 * Now, define a contextual filter for the _Slug_ using the custom argument
   plugin which we created.
   * Click on the _Add_ button for _Contextual filters_
@@ -136,6 +139,7 @@ put everything together.
     defined in our plugin, i.e. _Custom: Has taxonomy term with slug_.
   * Optionally, specify a validation criteria for _Taxonomy Term_ and specify
     the _Tags_ vocabulary.
+  ![](screenshots/step%2003%20-%20configure%20contextual%20filter%20for%20field_slug.png)
 * Save the view.
 
 And we're done! If you visit the `/blog/SLUG`, you should see all the articles
