@@ -1,21 +1,21 @@
 # Custom Views Argument Example
 
 In this tutorial we will learn how to have a field, e.g. `field_slug`, and use
-it to make pretty URLs for views pages which expect taxonomy terms as
-contextual arguments. Furthermore, the admin will be able edit the `field_slug`
+it to make pretty URLs for Views pages which expect taxonomy terms as
+contextual arguments. Furthermore, the admin will be able to edit the `field_slug`
 to choose what appears in the URL. Example: `blog/phsychology/search`.
 
 ## The Problem
 
 In certain Drupal projects we have taxonomy terms as contextual arguments for
-certain views pages. E.g. `/blog/[TERM]/search`. Automatic URL patterns with
+certain Views pages, e.g. `/blog/[TERM]/search`. Automatic URL patterns with
 the `pathauto` module create URLs to the default taxonomy term landing pages,
-however if you have views where you have taxonomy terms as contextual filters,
+however if you have Views where you have taxonomy terms as contextual filters,
 things get a little hard. In these cases, we often end up with term IDs in the
 URL, like `/blog/[TID]/search`. But having an ID in the URL is so old-school!
 We want pretty URLs which humans can read, right?
 
-In this tutorial we will discuss about creating a custom views argument which
+In this tutorial we will discuss about creating a custom Views argument which
 will take a string [slug](https://en.wikipedia.org/wiki/Clean_URL#Slug) from
 the URL and treat it as a taxonomy term ID to make our URLs pretty.
 
@@ -41,7 +41,7 @@ have a custom / contrib module to generate these slugs automatically.
 There are many different ways to solve this problem, but we will solve it
 with the help of the core `taxonomy` argument plugin which comes with
 the `taxonomy` module. The said plugin takes a term ID from the URL and passes
-it to views after optional validation. We will override the plugin such that it
+it to Views after optional validation. We will override the plugin so that it
 takes a string from the URL (slug), finds the relevant term ID and then leaves
 the rest of the operations to the original plugin.
 
@@ -63,7 +63,7 @@ To make the example work, we need the following configuration to be in place:
   * Number of values: At least one
 
 For this example, we will use the above setup, however in reality, you modify
-things as per your requirements. All the above configuration comes out of the
+things as per your requirements. All of the configurations as listed above come out of the
 box when you install the _Standard_ profile of Drupal. You will only need to
 configure the _Slug_ manually.
 
@@ -71,15 +71,15 @@ configure the _Slug_ manually.
 
 ### Step 2: Create a custom module
 
-To place the custom code we create a module. Example: `custom_views_argument`.
+To place the custom code we create a module, example: `custom_views_argument`.
 Declare a dependency on the `views` module in the `.info.yml`.
 
 ### Step 3: Implement hook_views_data_alter()
 
 **Reference:** [custom_views_argument.module](custom_views_argument.module)
 
-The `hook_views_data_alter()` hook tells views about the various database
-tables and fields and the relevant plugins associated to them. We implement
+The `hook_views_data_alter()` hook tells Views about the various database
+tables, fields and the relevant plugins associated to them. We implement
 this hook to tell Drupal to include our custom argument plugin which we will
 create in the next step.
 
@@ -88,8 +88,8 @@ create in the next step.
 **Reference:** [CustomTaxonomySlug.php](src/Plugin/views/argument/CustomTaxonomySlug.php)
 
 Next we implement the `CustomTaxonomySlug` class with a proper annotation
-`@ViewsArgument("custom_taxonomy_slug")`. This tells the views module that the
-class is a special class which implements a views argument plugin. We extend
+`@ViewsArgument("custom_taxonomy_slug")`. This tells the Views module that the
+class is a special class which implements a Views argument plugin. We extend
 the `Drupal\taxonomy\Plugin\views\argument\Taxonomy` class and override one
 important method `CustomTaxonomySlug::setArgument()`.
 
@@ -118,16 +118,16 @@ by creating some demo content. Create 2-3 articles and assign them some tags.
 The tags are created, however, they don't have a slug.
 
 Once done, go to the _Admin > Structure > Taxonomy > Tags_ page and edit the
-tags and give them nice URL slugs containing only numbers, alphabets and
+tags and give them nice URL slugs containing only English alphabet letters, numbers and
 dashes. For real projects, you might need to use a custom or contrib module to
 automatically generate slugs depending on your needs.
 
 ### Step 6: Configure a View
 
-Now we're all set! The last step is to create and configure a view which will
+Now we're all set! The last step is to create and configure a View which will
 put everything together.
 
-* Create a view of _Content_. You can name it _Blog_.
+* Create a View of _Content_. You can name it _Blog_.
 * Create a _page_ display and set it's URL to `/blog/%`
 * Add a relationship to _taxonomy terms referenced from field_tags_.
   * We do this to be able to use the _Slug_ field in a filter.
