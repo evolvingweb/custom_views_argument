@@ -38,8 +38,8 @@ have a custom / contrib module to generate these slugs automatically.
 
 **Reference:** `Drupal\taxonomy\Plugin\views\argument\Taxonomy`.
 
-There might be various solve this problems, but in this case, we will solve the
-problem with the help of the core `taxonomy` argument plugin which comes with
+There are many different ways to solve this problem, but we will solve it
+with the help of the core `taxonomy` argument plugin which comes with
 the `taxonomy` module. The said plugin takes a term ID from the URL and passes
 it to views after optional validation. We will override the plugin such that it
 takes a string from the URL (slug), finds the relevant term ID and then leaves
