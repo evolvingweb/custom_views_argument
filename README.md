@@ -3,7 +3,7 @@
 In this tutorial we will learn how to have a field, e.g. `field_slug`, and use
 it to make pretty URLs for Views pages which expect taxonomy terms as
 contextual arguments. Furthermore, the admin will be able to edit the `field_slug`
-to choose what appears in the URL. Example: `blog/phsychology/search`.
+to choose what appears in the URL. Example: `blog/psychology/search`.
 
 ## The Problem
 
